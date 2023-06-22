@@ -47,10 +47,14 @@ export async function fight(firstFighter, secondFighter) {
 
         leftFighter.currentHealth = firstFighter.health;
         rightFighter.currentHealth = secondFighter.health;
-        leftFighter.action = 'none';
-        rightFighter.action = 'none';
+        leftFighter.action = 'wait';
+        rightFighter.action = 'wait';
         leftFighter.position = 'left';
         rightFighter.position = 'right';
+        leftFighter.ultimateCooldown = false;
+        rightFighter.ultimateCooldown = false;
+        leftFighter.ultimateCharge = 0;
+        rightFighter.ultimateCharge = 0;
 
         document.addEventListener('keyup', event => {
             if (keyPressed.has(event.code)) keyPressed.delete(event.code);
@@ -68,6 +72,16 @@ export async function fight(firstFighter, secondFighter) {
                     break;
                 case controls.PlayerTwoBlock:
                     rightFighter.action = 'wait';
+                    break;
+                case controls.PlayerOneCriticalHitCombination[0]:
+                case controls.PlayerOneCriticalHitCombination[1]:
+                case controls.PlayerOneCriticalHitCombination[2]:
+                    leftFighter.ultimateCharge -= 1;
+                    break;
+                case controls.PlayerTwoCriticalHitCombination[0]:
+                case controls.PlayerTwoCriticalHitCombination[1]:
+                case controls.PlayerTwoCriticalHitCombination[2]:
+                    rightFighter.ultimateCharge -= 1;
                     break;
                 default:
                     break;
@@ -89,6 +103,32 @@ export async function fight(firstFighter, secondFighter) {
                     break;
                 case controls.PlayerTwoBlock:
                     rightFighter.action = 'block';
+                    break;
+                case controls.PlayerOneCriticalHitCombination[0]:
+                case controls.PlayerOneCriticalHitCombination[1]:
+                case controls.PlayerOneCriticalHitCombination[2]:
+                    leftFighter.ultimateCharge += 1;
+                    if (leftFighter.ultimateCharge === 3 && !leftFighter.ultimateCooldown) {
+                        leftFighter.action = 'attack';
+                        leftFighter.ultimateCooldown = true;
+                        rightFighter = fighterAttack(leftFighter, rightFighter, resolve, true);
+                        setTimeout(() => {
+                            leftFighter.ultimateCooldown = false;
+                        }, 10000);
+                    }
+                    break;
+                case controls.PlayerTwoCriticalHitCombination[0]:
+                case controls.PlayerTwoCriticalHitCombination[1]:
+                case controls.PlayerTwoCriticalHitCombination[2]:
+                    rightFighter.ultimateCharge += 1;
+                    if (rightFighter.ultimateCharge === 3 && !rightFighter.ultimateCooldown) {
+                        rightFighter.action = 'attack';
+                        rightFighter.ultimateCooldown = true;
+                        leftFighter = fighterAttack(rightFighter, leftFighter, resolve, true);
+                        setTimeout(() => {
+                            rightFighter.ultimateCooldown = false;
+                        }, 10000);
+                    }
                     break;
                 default:
                     break;
