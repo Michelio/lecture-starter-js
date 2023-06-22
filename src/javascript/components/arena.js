@@ -68,6 +68,6 @@ export default function renderArena(selectedFighters) {
     root.innerHTML = '';
     root.append(arena);
 
-    const winner = fight(...selectedFighters);
-    showWinnerModal(winner);
+    const fightingResult = fight(...selectedFighters);
+    fightingResult.then(winner => showWinnerModal(winner)).catch(error => console.error(error));
 }
