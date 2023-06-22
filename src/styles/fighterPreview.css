@@ -19,6 +19,11 @@
     font-weight: 700;
 }
 
+.fighter-preview___left img,
+.fighter-preview___right img {
+    height: 400px;
+}
+
 .fighter-preview___right img {
     transform: scaleX(-1);
 }
