@@ -10,7 +10,6 @@ export default function showWinnerModal(fighter) {
 
     const bodyElement = createElement({
         tagName: 'img',
-        className: 'fighter-preview___img',
         attributes: {
             src: fighter.source
         }

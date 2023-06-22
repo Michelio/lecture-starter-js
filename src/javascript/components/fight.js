@@ -61,11 +61,11 @@ export async function fight(firstFighter, secondFighter) {
             switch (event.code) {
                 case controls.PlayerOneAttack:
                     rightFighter = fighterAttack(leftFighter, rightFighter, resolve);
-                    leftFighter.action = 'wait';
+                    if (leftFighter.action !== 'block') leftFighter.action = 'wait';
                     break;
                 case controls.PlayerTwoAttack:
                     leftFighter = fighterAttack(rightFighter, leftFighter, resolve);
-                    rightFighter.action = 'wait';
+                    if (rightFighter.action !== 'block') rightFighter.action = 'wait';
                     break;
                 case controls.PlayerOneBlock:
                     leftFighter.action = 'wait';
