@@ -27,11 +27,11 @@ function updateHealthIndicator(fighter) {
 
 function fighterAttack(attacker, target, resolve, isCritical = false) {
     const defender = { ...target };
-    if (attacker.action !== 'attack' || defender.action === 'block') return defender;
-    const damage = getDamage(attacker, defender);
+    if (attacker.action !== 'attack' || (defender.action === 'block' && !isCritical)) return defender;
+    const damage = isCritical ? 2 * attacker.attack : getDamage(attacker, defender);
 
     if (damage > 0) {
-        defender.currentHealth -= isCritical ? 2 * damage : damage;
+        defender.currentHealth -= damage;
         updateHealthIndicator(defender);
     }
 
