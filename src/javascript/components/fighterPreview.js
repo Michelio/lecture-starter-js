@@ -10,17 +10,25 @@ export function createFighterPreview(fighter, position) {
     if (fighter) {
         const { name, health, attack, defense, source } = fighter;
 
+        const fighterStatsContainer = createElement({
+            tagName: 'div',
+            className: 'fighter-preview___stats'
+        });
         const fighterNameElement = createElement({
-            tagName: 'span'
+            tagName: 'span',
+            className: 'fighter-preview___text'
         });
         const fighterHealthElement = createElement({
-            tagName: 'span'
+            tagName: 'span',
+            className: 'fighter-preview___text'
         });
         const fighterAttackElement = createElement({
-            tagName: 'span'
+            tagName: 'span',
+            className: 'fighter-preview___text'
         });
         const fighterDefenseElement = createElement({
-            tagName: 'span'
+            tagName: 'span',
+            className: 'fighter-preview___text'
         });
         const fighterImageElement = createElement({
             tagName: 'img',
@@ -35,10 +43,11 @@ export function createFighterPreview(fighter, position) {
         fighterHealthElement.innerText = `Health: ${health}`;
         fighterAttackElement.innerText = `Attack: ${attack}`;
         fighterDefenseElement.innerText = `Defense: ${defense}`;
-        fighterElement.append(fighterNameElement);
-        fighterElement.append(fighterHealthElement);
-        fighterElement.append(fighterAttackElement);
-        fighterElement.append(fighterDefenseElement);
+        fighterStatsContainer.append(fighterNameElement);
+        fighterStatsContainer.append(fighterHealthElement);
+        fighterStatsContainer.append(fighterAttackElement);
+        fighterStatsContainer.append(fighterDefenseElement);
+        fighterElement.append(fighterStatsContainer);
         fighterElement.append(fighterImageElement);
     }
 
